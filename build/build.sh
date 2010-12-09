@@ -11,6 +11,13 @@ else
 fi
 BUILDDIR=datastore-$VERSION
 
+# sed hack...
+if [ `uname -s` = "Darwin" ]; then 
+	SED="sed -i \"\""
+else
+	SED="sed -i\"\""
+fi
+
 # Create the $BUILDDIR dir
 if [ -d $BUILDDIR ]; then 
 	rm -rf $BUILDDIR;
@@ -20,7 +27,7 @@ mkdir -p $BUILDDIR/datastore
 # Copy python files into the $BUILDDIR dir.
 cp $SRCDIR/datastore/*.py $BUILDDIR/datastore
 cp setup.py $BUILDDIR/
-sed -i "" s/VERSION/$VERSION/ $BUILDDIR/setup.py
+$SED s/VERSION/$VERSION/ $BUILDDIR/setup.py
 
 tar cfz $BUILDDIR.tar.gz $BUILDDIR
 
